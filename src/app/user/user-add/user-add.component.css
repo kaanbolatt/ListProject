@@ -1,0 +1,50 @@
+.addForm {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 250px;
+    width: 100%;
+}
+
+.addForm > * {
+    width: 300px;
+}
+
+.addForm > label {
+    font-size: 20px;
+    font-weight: 800;
+    font-family: var(--secondaryFont);
+    text-align: left;
+}
+
+.buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.save-btn,
+.cancel-btn {
+    background-color: var(--primaryColor);
+    font-family: var(--secondaryFont);
+    font-weight: 800;
+    color: black;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.save-btn:hover,
+.cancel-btn:hover {
+    background-color: var(--secondaryColor);
+    color: white;
+}
+
+.edit-form .save-btn:hover,
+.edit-form .cancel-btn:hover
+{
+    background-color: var(--secondaryColor);
+}

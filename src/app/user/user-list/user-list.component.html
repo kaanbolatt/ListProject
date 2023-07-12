@@ -1,0 +1,49 @@
+<table class="table-container">
+    <thead class="table-head">
+        <tr>
+            <th>USER ID</th>
+            <th>USERNAME</th>
+            <th>EMAIL</th>
+            <th>CREATION DATE</th>
+            <th>IS ACTİVE</th>
+            <th>EDIT / DELETE </th>
+        </tr>
+    </thead>
+    <tbody class="table-body">
+        <tr *ngFor="let item of users">
+            <td>{{item.userId}}</td>
+            <td>{{item.username | uppercase}}</td>
+            <td>{{item.email}}</td>
+            <td>{{item.creationDate | date }}</td>
+            <td>{{item.isActive}}</td>
+            <td class="buttons">
+                <app-button [buttonText] = "'Delete'" [id]= "item.userId" (onButtonClick)= "handleDeleteClick($event)" >
+                </app-button>
+                <app-button [buttonText]="'Edit'" [id]= "item.userId" (onButtonClick)="handleEditClick($event)">
+                </app-button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="addButton">
+    <button routerLink="/useradd">Add User</button>
+</div>
+
+<form *ngIf="editMode" class="editForm">
+    <label for="username">Username</label>
+    <input type="text" [(ngModel)]="username" name= "username" >
+    <label for="email">Email</label>
+    <input type="email" [(ngModel)]="email" name= "email" >
+    <label for="creationDate">Creation Date</label>
+    <input type="date" [(ngModel)]="creationDate" name= "creationDate" >
+    <label for="isActive">User Activation State</label>
+    <select [(ngModel)]="isActive" name="isActive">
+        <option [value]="true"> Active </option>
+        <option [value]="false">Passive</option>
+    </select>
+    <div class="buttons">
+        <button (click)="handleSaveClick()" type="button" class="save-btn">Save</button>
+        <button (click)="handleCancelClick()" type="button" class="cancel-btn">Cancel</button>
+    </div>
+</form>
