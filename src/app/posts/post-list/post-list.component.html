@@ -1,30 +1,52 @@
-<table>
-    <thead>
-        <tr>
-            <th>PostId</th>
-            <th>Title</th>
-            <th>View Count</th>
-            <th>Creation Date</th>
-            <th>Post Publish Statement</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of pagedData">
-            <td>{{item.postId}}</td>
-            <td>{{item.title}}</td>
-            <td>{{item.viewCount}}</td>
-            <td>{{item.creationDate}}</td>
-            <td>{{item.isPublished}}</td>
-            <app-button [buttonText]="'Detail'" [id]= "item.postId" (onButtonClick)="handleDetailClick($event)"></app-button>
-            <app-button [buttonText]="'Delete'" [id]= "item.postId" (onButtonClick)="handleDeleteClick($event)" ></app-button>
-        </tr>
-    </tbody>
-</table>
+<mat-card
+    style="height: 600px; background-color: white; box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);">
 
-<div class="pagination" *ngIf="totalPages > 0">
-    <button [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
-    <span>{{ currentPage }}</span>
-    <button [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
-</div>
+    <!-- <mat-form-field>
+      <mat-label>Filtre</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ürün listesinde arama yapmak istediğin kelimeyi yaz..."
+        #input>
+    </mat-form-field> -->
+    <button mat-raised-button color="primary" style="float: right;" [routerLink]="'/postadd'">Add Post</button>
 
-<button [routerLink]="'/postadd'">Add Post</button>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
+        <ng-container matColumnDef="postId">
+            <th mat-header-cell *matHeaderCellDef> Post Id</th>
+            <td mat-cell *matCellDef="let element"> {{element.postId}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef> Title</th>
+            <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="viewCount">
+            <th mat-header-cell *matHeaderCellDef> View Count </th>
+            <td mat-cell *matCellDef="let element"> {{element.viewCount}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="creationDate">
+            <th mat-header-cell *matHeaderCellDef> Creation Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.creationDate}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="isPublished">
+            <th mat-header-cell *matHeaderCellDef> Is Published </th>
+            <td mat-cell *matCellDef="let element"> {{element.isPublished}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="islemler">
+            <th mat-header-cell *matHeaderCellDef> İşlemler </th>
+            <td mat-cell *matCellDef="let element">
+                <app-button [buttonText]="'Detail'" [id]= "element.postId" (onButtonClick)="handleDetailClick($event)"></app-button>
+                <app-button [buttonText]="'Delete'" [id]= "element.postId" (onButtonClick)="handleDeleteClick($event)" ></app-button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+</mat-card>
