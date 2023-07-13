@@ -13,7 +13,7 @@ import { CategoryService } from '../category.service';
 
 export class CategoryAddComponent implements OnInit {
   category: Category = {
-    categoryId : 0,
+    categoryId: 0,
     name: "",
     creationDate: ""
   };
@@ -25,8 +25,9 @@ export class CategoryAddComponent implements OnInit {
   constructor(private categoryService: CategoryService, private router: Router, private userService: UserService) {
     this.userService.setUsers();
     this.users = this.userService.getUsers();
-    if (this.categoryService.getCategories().length === 0)
+    if (this.categoryService.getCategories().length === 0) {
       this.categoryService.setCategories();
+    }
     this.categories = this.categoryService.getCategories();
   }
 
@@ -36,7 +37,7 @@ export class CategoryAddComponent implements OnInit {
 
   handleSaveClick() {
     this.category.categoryId = this.categories[this.categories.length - 1].categoryId + 1;
-    this.categoryService.addCategory(this.category.name,this.category.creationDate);
+    this.categoryService.addCategory(this.category.name, this.category.creationDate);
     this.categories = this.categoryService.getCategories();
     this.router.navigateByUrl('/categorylist');
   }

@@ -29,32 +29,33 @@ export class CommentAddComponent {
     private postService: PostService,
     private commentService: CommentService,
     private router: Router) {
-      if (this.userService.getUsers().length === 0)
-        this.userService.setUsers();
-      if (this.postService.getPosts().length === 0)
-        this.postService.setPosts();
-      if (this.commentService.getComments().length === 0)
-        this.commentService.setComments();
-      else {
-        this.users = this.userService.getUsers();
-        this.posts = this.postService.getPosts();
-        this.comments = this.commentService.getComments();
-      }
+    console.log("🚀 ~ file: comment-add.component.ts:33 ~ CommentAddComponent ~ this.userService.getUsers().length:", this.userService.getUsers().length)
+    if (this.userService.getUsers().length === 0) {
+      this.userService.setUsers();
     }
+    if (this.postService.getPosts().length === 0) {
+      this.postService.setPosts();
+    }
+    if (this.commentService.getComments().length === 0) {
+      this.commentService.setComments();
+    }
+    this.users = this.userService.getUsers();
+    this.posts = this.postService.getPosts();
+    this.comments = this.commentService.getComments();
+  }
 
   handleSaveClick() {
     if (this.comment.postId === 0 || this.comment.userId === 0
-        ||this.comment.creationDate === "" || this.comment.comment === "")
+      || this.comment.creationDate === "" || this.comment.comment === "")
       alert("You must fill every section");
-    else
-    {
+    else {
       this.comment.commentId = this.comments[this.comments.length - 1].commentId + 1;
       this.commentService.addComment(this.comment);
       this.router.navigateByUrl("/commentlist");
     }
   }
 
-  handleCancelClick(){
+  handleCancelClick() {
     this.router.navigateByUrl("/commentlist");
   }
 }

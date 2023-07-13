@@ -35,8 +35,12 @@ export class CategoryDetailComponent {
       const id = params['id'];
       this.category = this.categoryService.getCategoryById(Number(id))!;
       if (this.category == undefined) {
-        alert("An error occurred while retrieving category information.");
-        this.router.navigateByUrl("/categorylist");
+        if (this.categoryService.getCategories().length === 0) {
+          this.categoryService.setCategories();
+          this.category = this.categoryService.getCategoryById(Number(id))!;
+        }
+        // alert("An error occurred while retrieving category information.");
+        // this.router.navigateByUrl("/categorylist");
       }
       this.updatedCategory.categoryId = Number(id);
       if (this.postService.getPosts().length === 0)

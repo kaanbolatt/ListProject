@@ -25,12 +25,13 @@ export class CommentDetailComponent {
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       this.comments = this.commentService.getComments();
+      if (this.comments.length === 0) {
+        this.commentService.setComments();
+        this.comments = this.commentService.getComments();
+      }
       const id = params['id'];
       this.comment = this.comments.find(comment => comment.commentId === Number(id))!;
     })
-    if (this.comment == undefined) {
-      alert("An error occurred while retrieving comment information.");
-      this.router.navigateByUrl("/commentlist");
-    }
+
   }
 }
