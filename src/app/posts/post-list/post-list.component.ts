@@ -73,16 +73,51 @@ export class PostListComponent implements AfterViewInit {
   applyFilter(filterValue: any): void {
     this.dataSource.filter = filterValue.value.trim().toLowerCase(); // Filtreleme işlemini uygula
   }
-  applyFilterUser(filterValue: any): void {
-    this.dataSource = new MatTableDataSource(this.posts.filter(x => x.userId === Number(filterValue.target.value)));
+
+  applyFilterUser(): void {
+    if (this.selectedCategoryId > 0 && this.selectedPostId > 0) {
+      this.dataSource = new MatTableDataSource(this.posts.filter(x => x.userId === Number(this.selectedUserId) && x.categoryId == Number(this.selectedCategoryId) && x.postId == Number(this.selectedPostId)));
+    } else if (this.selectedCategoryId > 0 && this.selectedPostId <= 0) {
+      this.dataSource = new MatTableDataSource(this.posts.filter(x => x.userId === Number(this.selectedUserId) && x.categoryId == Number(this.selectedCategoryId)));
+    } else if (this.selectedPostId > 0 && this.selectedCategoryId <= 0) {
+      this.dataSource = new MatTableDataSource(this.posts.filter(x => x.userId === Number(this.selectedUserId) && x.postId == Number(this.selectedPostId)));
+    } else {
+      this.dataSource = new MatTableDataSource(this.posts.filter(x => x.userId === Number(this.selectedUserId)));
+    }
     this.dataSource.paginator = this.paginator; // MatPaginator'ı güncelle
   }
+
   applyFilterCategorie(): void {
-    this.dataSource = new MatTableDataSource(this.posts.filter(x => x.categoryId === Number(this.selectedCategoryId)));
+    if (this.selectedUserId > 0 && this.selectedPostId > 0) {
+      this.dataSource = new MatTableDataSource(this.posts.filter(x => x.userId === Number(this.selectedUserId) && x.categoryId == Number(this.selectedCategoryId) && x.postId == Number(this.selectedPostId)));
+    } else if (this.selectedUserId > 0 && this.selectedPostId <= 0) {
+      this.dataSource = new MatTableDataSource(this.posts.filter(x => x.userId === Number(this.selectedUserId) && x.categoryId == Number(this.selectedCategoryId)));
+    } else if (this.selectedPostId > 0 && this.selectedUserId <= 0) {
+      this.dataSource = new MatTableDataSource(this.posts.filter(x => x.userId === Number(this.selectedUserId) && x.postId == Number(this.selectedPostId)));
+    } else {
+      this.dataSource = new MatTableDataSource(this.posts.filter(x => x.categoryId === Number(this.selectedCategoryId)));
+    }
     this.dataSource.paginator = this.paginator; // MatPaginator'ı güncelle
   }
-  applyFilterPost(filterValue: any): void {
-    this.dataSource = new MatTableDataSource(this.posts.filter(x => x.postId === Number(filterValue.target.value)));
+
+  applyFilterPost(): void {
+    if (this.selectedUserId > 0 && this.selectedPostId > 0) {
+      this.dataSource = new MatTableDataSource(this.posts.filter(x => x.userId === Number(this.selectedUserId) && x.categoryId == Number(this.selectedCategoryId) && x.postId == Number(this.selectedPostId)));
+    } else if (this.selectedUserId > 0 && this.selectedCategoryId <= 0) {
+      this.dataSource = new MatTableDataSource(this.posts.filter(x => x.userId === Number(this.selectedUserId) && x.postId == Number(this.selectedPostId)));
+    } else if (this.selectedCategoryId > 0 && this.selectedUserId <= 0) {
+      this.dataSource = new MatTableDataSource(this.posts.filter(x => x.categoryId === Number(this.selectedCategoryId) && x.postId == Number(this.selectedPostId)));
+    } else {
+      this.dataSource = new MatTableDataSource(this.posts.filter(x => x.postId === Number(this.selectedPostId)));
+    }
+    this.dataSource.paginator = this.paginator; // MatPaginator'ı güncelle
+  }
+
+  clearFilter() {
+    this.selectedCategoryId = null;
+    this.selectedPostId = null;
+    this.selectedUserId = null;
+    this.dataSource = new MatTableDataSource(this.postService.getPosts());
     this.dataSource.paginator = this.paginator; // MatPaginator'ı güncelle
   }
 }

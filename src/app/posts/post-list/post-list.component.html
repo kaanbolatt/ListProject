@@ -1,4 +1,9 @@
-<button mat-raised-button color="primary" style="float: right;" [routerLink]="'/postadd'">+ Add Post</button>
+<button mat-raised-button color="primary" style="    margin-top: 0.5%;
+background-color: var(--bgColor);
+float: right; margin-left: 2%" [routerLink]="'/postadd'">+ Add Post</button>
+<button mat-raised-button color="primary" style="    margin-top: 0.5%;
+background-color: var(--bgColor);
+float: right;" (click)="clearFilter()">Clear Filter</button>
 
 <mat-form-field appearance="fill">
     <mat-label>General Search</mat-label>
@@ -7,7 +12,7 @@
 
 <mat-form-field appearance="fill" style="margin-left: 2%">
     <mat-label>User Search</mat-label>
-    <select matNativeControl [(ngModel)]="selectedUserId" (change)="applyFilterUser($event)" name="user" [ngModelOptions]="{standalone: true}">
+    <select matNativeControl [(ngModel)]="selectedUserId" (change)="applyFilterUser()" name="user" [ngModelOptions]="{standalone: true}">
         <option *ngFor="let user of users" [value]="user.userId">{{user.username}}</option>
     </select>
 </mat-form-field>
@@ -21,7 +26,7 @@
 
 <mat-form-field appearance="fill" style="margin-left: 2%">
     <mat-label>Post Search</mat-label>
-    <select matNativeControl [(ngModel)]="selectedPostId" (change)="applyFilterPost($event)" name="user" [ngModelOptions]="{standalone: true}">
+    <select matNativeControl [(ngModel)]="selectedPostId" (change)="applyFilterPost()" name="user" [ngModelOptions]="{standalone: true}">
         <option *ngFor="let post of posts" [value]="post.postId">{{post.title}}</option>
     </select>
 </mat-form-field>
