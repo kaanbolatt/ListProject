@@ -1,33 +1,55 @@
-<table>
-    <thead>
-        <tr>
-            <th>Comment ID</th>
-            <th>Post ID</th>
-            <th>User ID</th>
-            <th>Comment</th>
-            <th>Creation Date</th>
-            <th>Is Confirmed</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of pagedData">
-            <td>{{item.commentId}}</td>
-            <td>{{item.postId}}</td>
-            <td>{{item.userId}}</td>
-            <td>{{item.comment}}</td>
-            <td>{{item.creationDate}}</td>
-            <td>{{item.isConfirmed}}</td>
-            <app-button [buttonText]="'Detail'" [id]= "item.commentId" (onButtonClick)="handleDetailClick($event)"></app-button>
-            <app-button [buttonText]="'Delete'" [id]= "item.commentId" (onButtonClick)="handleDeleteClick($event)" ></app-button>
-        </tr>
-    </tbody>
+<button mat-raised-button color="primary" style="float: right;" [routerLink]="'/commentadd'">+ Add Comment</button>
+
+<mat-form-field appearance="fill">
+    <mat-label>Search</mat-label>
+    <input matInput (input)="applyFilter($event.target)" placeholder="Search Text">
+</mat-form-field>
+
+<!-- <th>Comment ID</th>
+<th>Comment</th>
+<th>Creation Date</th>
+<th>Is Confirmed</th> -->
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
+    <ng-container matColumnDef="commentId">
+        <th mat-header-cell *matHeaderCellDef> Comment Id</th>
+        <td mat-cell *matCellDef="let element"> {{element.commentId}} </td>
+    </ng-container>
+    <ng-container matColumnDef="postId">
+        <th mat-header-cell *matHeaderCellDef> Post Id</th>
+        <td mat-cell *matCellDef="let element"> {{element.postId}} </td>
+    </ng-container>
+    <ng-container matColumnDef="userId">
+        <th mat-header-cell *matHeaderCellDef> User Id</th>
+        <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="comment">
+        <th mat-header-cell *matHeaderCellDef> Comment</th>
+        <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="creationDate">
+        <th mat-header-cell *matHeaderCellDef> Creation Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.creationDate | date}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="isConfirmed">
+        <th mat-header-cell *matHeaderCellDef> Is isConfirmed </th>
+        <td mat-cell *matCellDef="let element"> {{element.isConfirmed ? 'Confirm' : 'Not Confirm'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="transactions">
+        <th mat-header-cell *matHeaderCellDef> Transactions </th>
+        <td mat-cell *matCellDef="let element">
+            <app-button [buttonText]="'Detail'" [id]="element.commentId" (onButtonClick)="handleDetailClick($event)"></app-button>
+            <app-button style="margin-left: 5%;" [buttonText]="'Delete'" [id]="element.commentId" (onButtonClick)="handleDeleteClick($event)"></app-button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
 </table>
 
-<button type="button" routerLink="/commentadd">Add Comment</button>
-
-<div class="pagination" *ngIf="totalPages > 0">
-    <button [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
-    <span>{{ currentPage }}</span>
-    <button [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
-</div>
-
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+</mat-paginator>

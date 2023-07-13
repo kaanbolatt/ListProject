@@ -22,7 +22,6 @@ export class PostListComponent implements AfterViewInit {
     this.getAllPosts();
 
   }
-
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }

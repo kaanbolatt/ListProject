@@ -22,7 +22,6 @@ export class PostAddComponent implements OnInit {
     isPublished: false
   };
 
-  dialogTitle: string = "Add Post";
   users: User[] = [];
   posts: Post[] = [];
 

@@ -1,66 +1,55 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Comment } from '../comment';
 import { CommentService } from '../comment.service';
 import { Router } from '@angular/router';
-
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-comment-list',
   templateUrl: './comment-list.component.html',
   styleUrls: ['./comment-list.component.css']
 })
 export class CommentListComponent {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   comments: Comment[] = [];
-  pagedData: Comment[] = [];
-  currentPage = 1;
-  itemsPerPage = 10;
+  dataSource = new MatTableDataSource<Comment>();
+  displayedColumns: string[] = ['commentId', 'postId', 'userId', 'comment', 'creationDate', 'isConfirmed', 'transactions'];
+  totalItems: any;
 
   constructor(private commentService: CommentService,
-    private router: Router){
+    private router: Router) {
+    this.getAllComments();
+  };
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  getAllComments() {
     if (this.commentService.getComments().length === 0)
       this.commentService.setComments();
     this.comments = this.commentService.getComments();
-  };
+    if (this.comments != undefined) {
+      this.totalItems = this.comments.length;
+      this.dataSource = new MatTableDataSource(this.comments);
+    }
+  }
 
-  handleDetailClick($event: number){
+  handleDeleteClick($event: number) {
+    this.commentService.deleteComment($event);
+    this.comments = this.commentService.getComments();
+    this.totalItems = this.comments.length;
+    this.dataSource = new MatTableDataSource(this.comments);
+    this.dataSource.paginator = this.paginator;
+  }
+
+  handleDetailClick($event: number) {
     this.router.navigateByUrl(`/commentlist/${$event}`);
   }
 
-  handleDeleteClick($event: number){
-    this.commentService.deleteComment($event);
-    this.comments = this.commentService.getComments();
-    this.pageChanged(this.currentPage);
+
+  applyFilter(filterValue: any): void {
+    this.dataSource.filter = filterValue.value.trim().toLowerCase();
   }
 
-  ngOnInit(){
-    this.pageChanged(this.currentPage);
-  }
-
-  pageChanged(page: number): void {
-    const startIndex = (page - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.pagedData = this.comments.slice(startIndex, endIndex);
-    this.currentPage = page;
-    if (this.pagedData.length === 0 && this.currentPage > 1)
-      this.previousPage();
-  }
-
-  previousPage(): void {
-    if (this.currentPage > 1)
-    {
-      this.currentPage--;
-      this.pageChanged(this.currentPage);
-    }
-  }
-
-  nextPage(): void {
-    if (this.currentPage < this.totalPages)
-    {
-      this.currentPage++;
-      this.pageChanged(this.currentPage);
-    }
-  }
-
-  get totalPages(): number {
-    return Math.ceil(this.comments.length / this.itemsPerPage);
-  }
 }

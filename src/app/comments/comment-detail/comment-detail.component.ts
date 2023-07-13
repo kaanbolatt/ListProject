@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Comment } from '../comment';
 import { CommentService } from '../comment.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-comment-detail',
@@ -19,7 +19,7 @@ export class CommentDetailComponent {
     isConfirmed: false
   };
 
-  constructor(private commentService: CommentService, private activatedRoute: ActivatedRoute) {
+  constructor(private commentService: CommentService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
@@ -27,6 +27,10 @@ export class CommentDetailComponent {
       this.comments = this.commentService.getComments();
       const id = params['id'];
       this.comment = this.comments.find(comment => comment.commentId === Number(id))!;
-      })
+    })
+    if (this.comment == undefined) {
+      alert("An error occurred while retrieving comment information.");
+      this.router.navigateByUrl("/commentlist");
     }
+  }
 }
