@@ -1,14 +1,10 @@
 <button mat-raised-button color="primary" style="float: right;" [routerLink]="'/commentadd'">+ Add Comment</button>
 
 <mat-form-field appearance="fill">
-    <mat-label>Search</mat-label>
+    <mat-label>General Search</mat-label>
     <input matInput (input)="applyFilter($event.target)" placeholder="Search Text">
 </mat-form-field>
 
-<!-- <th>Comment ID</th>
-<th>Comment</th>
-<th>Creation Date</th>
-<th>Is Confirmed</th> -->
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
     <ng-container matColumnDef="commentId">
         <th mat-header-cell *matHeaderCellDef> Comment Id</th>

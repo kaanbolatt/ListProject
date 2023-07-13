@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Comment } from './comment';
-import { defaultcomments } from 'src/assets/defaultcomments';
+import { Comment } from './comment'; // './comment' dosyasından Comment modelini import ediyoruz
+import { defaultcomments } from 'src/assets/defaultcomments'; // Varsayılan yorumları içeren dosyayı import ediyoruz
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
-  private comments: Comment[] = [];
+  private comments: Comment[] = []; // Yorumlar dizisi
   constructor() { }
 
   getComments(): Comment[] {
@@ -14,14 +14,14 @@ export class CommentService {
   }
 
   setComments(): void {
-    this.comments = defaultcomments;
+    this.comments = defaultcomments; // Varsayılan yorumları ayarla
   }
 
   deleteComment($event: number) {
-    this.comments = this.comments.filter((comment) => comment.commentId !== $event);
+    this.comments = this.comments.filter((comment) => comment.commentId !== $event); // Belirtilen kimlik değerine sahip yorumu filtrele ve diziden çıkar
   }
 
   addComment(comment: Comment) {
-    this.comments.push(comment);
+    this.comments.push(comment); // Yorumu yorumlar dizisine ekle
   }
 }

@@ -51,8 +51,16 @@
                         <select matNativeControl [(ngModel)]="post.userId" name="user" [ngModelOptions]="{standalone: true}">
                             <option *ngFor="let user of users" [value]="user.userId">{{user.username}}</option>
                         </select>
-
-
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+                <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Categories</mat-label>
+                        <select matNativeControl [(ngModel)]="post.categoryId" name="user" [ngModelOptions]="{standalone: true}">
+                            <option *ngFor="let category of categories" [value]="category.categoryId">{{category.name}}</option>
+                        </select>
                     </mat-form-field>
                 </div>
             </div>

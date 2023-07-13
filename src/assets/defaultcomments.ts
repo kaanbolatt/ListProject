@@ -72,6 +72,14 @@ export const defaultcomments = [
       isConfirmed: false
     },
     {
+      commentId: 9,
+      postId: 1,
+      userId: 2,
+      comment: "Loremm Ipsuum",
+      creationDate: "2018-10-27",
+      isConfirmed: false
+    },
+    {
       commentId: 10,
       postId: 75,
       userId: 2,

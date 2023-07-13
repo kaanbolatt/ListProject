@@ -3,7 +3,6 @@ import { User } from '../user';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-user-add',
   templateUrl: './user-add.component.html',
@@ -11,36 +10,42 @@ import { Router } from '@angular/router';
 })
 export class UserAddComponent {
 
-  //form içerisinde kullanılmak üzere yeni user objesi oluşturarak tipleri belirledik.
+  // Yeni bir kullanıcı nesnesi oluşturuldu ve tipi belirlendi
   user: User = {
     userId: 0,
-    username:"",
+    username: "",
     email: "",
-    creationDate:"",
+    creationDate: "",
     isActive: false
   }
 
-
   constructor(private userService: UserService, private router: Router) {
-    if(this.userService.getUsers().length === 0)
+    // userService üzerinden getUsers fonksiyonu kullanılarak kullanıcı verileri alınıyor
+    if (this.userService.getUsers().length === 0)
       this.userService.setUsers();
-
   }
 
-  /*userService componentinden veri önce setUsers fonktsiyonun kullanarak verileri çekiyoruz, daha sonra getUsers kullanarak
-  userCount foksiyonu ile son userId'yi bularak yeni userId numarası oluşturuyoruz.*/
+  // Yeni bir kullanıcı oluşturmak için kullanılan fonksiyon
   handleCreateClick() {
-    this.user.userId = this.userService.getUsers()[this.userService.userCount() - 1].userId + 1 ;
-    if(this.user.username === "" || this.user.email === "" || this.user.creationDate === "")
-      alert("Fill the empty spaces.")
-    else if(this.userService.checkUnique(this.user.username,this.user.email,this.user.userId)===false)
-      alert("This user already exist.")
+    // Kullanıcının userId'si, mevcut kullanıcıların en son userId'sine 1 eklenerek belirlenir
+    this.user.userId = this.userService.getUsers()[this.userService.userCount() - 1].userId + 1;
+
+    // Boş alanlar kontrol ediliyor
+    if (this.user.username === "" || this.user.email === "" || this.user.creationDate === "")
+      alert("Fill the empty spaces.");
+
+    // Kullanıcının benzersiz olup olmadığı kontrol ediliyor
+    else if (this.userService.checkUnique(this.user.username, this.user.email, this.user.userId) === false)
+      alert("This user already exists.");
+
+    // Kullanıcı ekleniyor ve kullanıcı listesine yönlendiriliyor
     else {
       this.userService.addUser(this.user);
       this.router.navigateByUrl('/userlist');
     }
   }
 
+  // İşlem iptal edildiğinde kullanıcı listesine yönlendiriliyor
   handleCancelClick() {
     this.router.navigateByUrl("/userlist");
   }

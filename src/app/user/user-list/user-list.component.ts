@@ -7,7 +7,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -19,7 +18,7 @@ export class UserListComponent implements AfterViewInit {
 
   users: User[] = [];
 
-  //forms kısmında yer alan değişkenleri tanımladık.
+  // Form alanında kullanılan değişkenler tanımlanıyor
   username: string = "";
   email: string = "";
   creationDate: string = "";
@@ -29,9 +28,15 @@ export class UserListComponent implements AfterViewInit {
   totalItems: any;
   displayedColumns: string[] = ['userId', 'username', 'email', 'creationDate', 'isActive', 'transactions'];
 
-
-  constructor(private userService: UserService, private postService: PostService, private commentService: CommentService, private router: Router) {
+  constructor(
+    private userService: UserService,
+    private postService: PostService,
+    private commentService: CommentService,
+    private router: Router
+  ) {
     this.getAllUsers();
+
+    // Gerekli servislerin verileri set etmesi sağlanıyor
     if (this.postService.getPosts().length === 0)
       this.postService.setPosts();
     if (this.commentService.getComments().length === 0)
@@ -46,18 +51,19 @@ export class UserListComponent implements AfterViewInit {
     if (this.userService.getUsers().length === 0)
       this.userService.setUsers();
     this.users = this.userService.getUsers();
+
     if (this.users != undefined) {
       this.totalItems = this.users.length;
       this.dataSource = new MatTableDataSource(this.users);
     }
   }
 
-  //son kullanıcı kalması durumunda hata vermesini sağladık.
+  // Son kullanıcı kalması durumunda hata mesajı gösteriliyor
   handleDeleteClick($event: number) {
     if (this.userService.userCount() === 1)
-      alert("You can not delete last users.")
+      alert("You cannot delete the last user.");
     else if (this.checkPostsAndComments($event) === true)
-      alert("You cannot delete a user with post or comment");
+      alert("You cannot delete a user with posts or comments.");
     else {
       this.userService.deleteUser($event);
       this.users = this.userService.getUsers();
@@ -67,6 +73,7 @@ export class UserListComponent implements AfterViewInit {
     }
   }
 
+  // Bir kullanıcının yazıları ve yorumları kontrol ediliyor
   checkPostsAndComments(id: number): boolean {
     if (this.postService.getPosts().filter((post) => post.userId === id).length !== 0)
       return true;
@@ -80,21 +87,7 @@ export class UserListComponent implements AfterViewInit {
     this.router.navigate(["/userlist/", $event]);
   }
 
-  // handleEditClick($event: number): void {
-  //   this.editMode = true;
-  //   this.userId = $event;
-  // }
-
-  // handleCancelClick(): void {
-  //   this.editMode = false;
-  //   this.username = "";
-  //   this.email = "";
-  //   this.creationDate = "";
-  //   this.userId = 0;
-  // }
-
   applyFilter(filterValue: any): void {
     this.dataSource.filter = filterValue.value.trim().toLowerCase();
   }
 }
-
