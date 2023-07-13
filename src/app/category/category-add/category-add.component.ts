@@ -3,9 +3,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/user/user.service';
 import { User } from 'src/app/user/user';
-import { ActionTypes } from 'src/app/enums/action-types.enum';
-import { PostService } from 'src/app/posts/post.service';
-import { Post } from 'src/app/posts/post';
 import { Category } from '../category';
 import { CategoryService } from '../category.service';
 @Component({
