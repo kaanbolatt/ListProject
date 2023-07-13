@@ -46,7 +46,7 @@ export class CategoryDetailComponent {
   }
 
   handleSaveClick() {
-    this.categoryService.updateCategory(this.updatedCategory);
+    this.categoryService.updateCategory(this.category);
     this.router.navigateByUrl("/categorylist");
   }
 
