@@ -55,6 +55,8 @@ export class CommentAddComponent {
       alert("You must fill every section"); // Tüm alanların doldurulması gerektiğini bildiren uyarı mesajı göster
     } else {
       this.comment.commentId = this.comments[this.comments.length - 1].commentId + 1; // Yeni yorum kimliğini son yorumun kimliğine bir ekleyerek belirle
+      this.comment.postId = Number(this.comment.postId);
+      this.comment.userId = Number(this.comment.userId);
       this.commentService.addComment(this.comment); // Yorum ekleme işlemini yap
       this.router.navigateByUrl("/commentlist"); // 'commentlist' yoluna yönlendir
     }

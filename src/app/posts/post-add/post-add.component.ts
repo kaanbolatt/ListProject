@@ -48,6 +48,8 @@ export class PostAddComponent implements OnInit {
 
   handleSaveClick() {
     this.post.postId = this.posts[this.posts.length - 1].postId + 1; // Yeni yazıya bir kimlik değeri atanıyor
+    this.post.categoryId = Number(this.post.categoryId);
+    this.post.userId = Number(this.post.userId);
     this.postService.addPost(this.post); // Yazıyı ekle
     this.posts = this.postService.getPosts(); // Güncellenmiş yazıları al
     this.router.navigateByUrl('/postlist'); // Yazı listesine yönlendir

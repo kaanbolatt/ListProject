@@ -69,7 +69,7 @@ export class PostDetailComponent implements AfterViewInit {
       if (this.commentService.getComments().length === 0) {
         this.commentService.setComments();
       }
-      this.comments = this.commentService.getComments().filter(comment => comment.postId === Number(id)); 
+      this.comments = this.commentService.getComments().filter(comment => comment.postId === Number(id));
       this.dataSource = new MatTableDataSource(this.comments);
       this.post = this.posts.find(post => post.postId === Number(id))!; // Yazıyı bul
       if (this.post == undefined) {
@@ -89,11 +89,25 @@ export class PostDetailComponent implements AfterViewInit {
   }
 
   handleDeleteClick() {
-    this.postService.deletePost(this.post.postId); // Yazıyı sil
-    this.router.navigateByUrl('/postlist'); // Yazı listesine yönlendir
+   if (this.checkComments(this.post.postId) === true) {
+      // Gönderiye ait yorum varsa
+      alert("You cannot delete a post with comment"); // Uyarı mesajı göster
+    } else {
+      this.postService.deletePost(this.post.postId); // Yazıyı sil
+      this.router.navigateByUrl('/postlist'); // Yazı listesine yönlendir
+    }
   }
 
   handleEditClick() {
     this.editMode = !this.editMode; // Düzenleme modunu değiştir
+  }
+
+  checkComments(id: number): boolean {
+    // Verilen gönderi idsine sahip  yorumlar varsa true, yoksa false döndürür
+    if (this.commentService.getComments().filter((comment) => Number(comment.postId) === Number(id)).length !== 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
