@@ -11,6 +11,7 @@ import { CategoryModule } from './category/category.module';
 import { CommentsModule } from './comments/comments.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent],

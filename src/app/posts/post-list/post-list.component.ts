@@ -4,6 +4,9 @@ import { Post } from '../post';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { ActionTypes } from 'src/app/enums/action-types.enum';
+import { PostAddComponent } from '../post-add/post-add.component';
 
 @Component({
   selector: 'app-post-list',
@@ -17,9 +20,24 @@ export class PostListComponent implements AfterViewInit {
   currentPage = 1;
   itemsPerPage = 10;
   dataSource = new MatTableDataSource<Post>();
-  displayedColumns: string[] = ['postId', 'title', 'viewCount', 'creationDate', 'isPublished', 'islemler'];
+  displayedColumns: string[] = ['postId', 'title', 'viewCount', 'creationDate', 'isPublished', 'transactions'];
   totalItems: any;
-  constructor(private postService: PostService, private router: Router) {
+  dialogRefNewPost: any;
+
+
+  constructor(private postService: PostService, private router: Router, private matDialog: MatDialog) {
+    this.getAllPosts();
+
+  }
+
+  ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  getAllPosts() {
     if (this.postService.getPosts().length === 0) {
       this.postService.setPosts();
     }
@@ -28,10 +46,6 @@ export class PostListComponent implements AfterViewInit {
       this.totalItems = this.posts.length;
       this.dataSource = new MatTableDataSource(this.posts);
     }
-
-  }
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
   }
 
   handleDeleteClick($event: number): void {
@@ -47,7 +61,8 @@ export class PostListComponent implements AfterViewInit {
     this.router.navigate(["/postlist/", $event]);
   }
 
-  ngOnInit() {
+  applyFilter(filterValue: any): void {
+    this.dataSource.filter = filterValue.value.trim().toLowerCase();
   }
 
 

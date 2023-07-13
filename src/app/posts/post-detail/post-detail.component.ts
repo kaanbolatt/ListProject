@@ -13,41 +13,48 @@ import { CategoryService } from 'src/app/category/category.service';
   styleUrls: ['./post-detail.component.css']
 })
 export class PostDetailComponent {
- posts: Post[] = [];
- post: Post = {
-  postId: 0,
-  userId: 0,
-  categoryId: 0,
-  title: "",
-  content: "",
-  viewCount: 0,
-  creationDate: "",
-  isPublished: false
- };
- users: User[] = [];
- categories: Category[] = [];
- editMode: Boolean = false;
+  posts: Post[] = [];
+  post: Post = {
+    postId: 0,
+    userId: 0,
+    categoryId: 0,
+    title: "",
+    content: "",
+    viewCount: 0,
+    creationDate: "",
+    isPublished: false
+  };
+  users: User[] = [];
+  categories: Category[] = [];
+  editMode: Boolean = false;
 
- constructor(private postService: PostService,
-  private router: Router,
-  private activatedRoute: ActivatedRoute,
-  private userService: UserService,
-  private categoryService: CategoryService) {
-    if (this.userService.getUsers().length === 0)
+  constructor(private postService: PostService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private userService: UserService,
+    private categoryService: CategoryService) {
+    if (this.userService.getUsers().length === 0) {
       this.userService.setUsers();
-    else
+    }
+    else {
       this.users = this.userService.getUsers();
-    if (this.categoryService.getCategories().length === 0)
+    }
+    if (this.categoryService.getCategories().length === 0) {
       this.categoryService.setCategories();
-    else
+    }
+    else {
       this.categories = this.categoryService.getCategories();
- }
-
- ngOnInit() {
-  this.activatedRoute.params.subscribe(params => {
-    this.posts = this.postService.getPosts();
-    const id = params['id'];
-    this.post = this.posts.find(post => post.postId === Number(id))!;
+    }
+    if (this.postService.getPosts().length === 0) {
+      this.postService.setPosts();
+    }
+    this.posts = this.postService.getPosts()
+  }
+  
+  ngOnInit() {
+    this.activatedRoute.params.subscribe(params => {
+      const id = params['id'];
+      this.post = this.posts.find(post => post.postId === Number(id))!;
     })
   }
 
@@ -56,7 +63,7 @@ export class PostDetailComponent {
     this.router.navigateByUrl('/postlist');
   }
 
-  handleDeleteClick(){
+  handleDeleteClick() {
     this.postService.deletePost(this.post.postId);
     this.router.navigateByUrl('/postlist');
   }

@@ -1,61 +1,83 @@
-<div class="post-card">
-    <div class="post-detail">
-        <div class="header">
-            <p>{{this.post.postId}}</p>
-            <h1>{{post.title | uppercase }}</h1>
-        </div>
-        <div class="content">
-            <h2>Post Content</h2>
-            <p>{{post.content}}</p>
-        </div>
-        <div class="footer">
-            <div>
-                <h2>Category</h2>
-                <p>{{categories[post.categoryId - 1].name}}</p>
-            </div>
-            <div>
-                <h2>Date</h2>
-                <p>{{post.creationDate}}</p>
-            </div>
-            <div>
-                <h2>Author Name / User Id</h2>
-                <p>{{users[post.userId - 1].username}}</p>
-                <p>userId: {{post.userId}}</p>
-            </div>
-            <div>
-                <h2>View Count</h2>
-                <p>{{post.viewCount}}</p>
-            </div>
-            <div>
-                <h2>Is Published</h2>
-                <p>{{post.isPublished}}</p>
-            </div>
-        </div>
-    </div>
-</div>
 
-<button (click)="handleEditClick()" type="button">Edit</button>
-<button (click)="handleDeleteClick()" type="button">Delete</button>
+<form  name="postForm" style="text-align: center; padding: 5%;">
+    <div mat-dialog-content newgenPerfectScrollbar>
+        <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+            <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Title</mat-label>
+                    <input matInput [(ngModel)]="post.title" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+            <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Content</mat-label>
+                    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" [(ngModel)]="post.content" [ngModelOptions]="{standalone: true}"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+            <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>View Count</mat-label>
+                    <input matInput type="number" [(ngModel)]="post.viewCount" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+            <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Creation Date</mat-label>
+                    <input matInput type="date" [(ngModel)]="post.creationDate" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+            <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Publish State</mat-label>
+                    <select matNativeControl [(ngModel)]="post.isPublished" [ngModelOptions]="{standalone: true}" name="isPublished">
+                        <option [value]="true"> Published </option>
+                        <option [value]="false">Notpublished</option>
+                    </select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+            <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>User</mat-label>
+                    <select matNativeControl [(ngModel)]="post.userId" name="user" [ngModelOptions]="{standalone: true}">
+                        <option *ngFor="let user of users" [value]="user.userId">{{user.username}}</option>
+                    </select>
 
-<form *ngIf="editMode">
-    <label for="title">Title</label>
-    <input type="text" [(ngModel)]="post.title" name= "title" >
-    <label for="content">Content</label>
-    <input type="content" [(ngModel)]="post.content" name= "content" >
-    <label for="creationDate">Creation Date</label>
-    <input type="date" [(ngModel)]="post.creationDate" name= "creationDate" >
-    <label for="isPublished">Published State</label>
-    <select [(ngModel)]="post.isPublished" name="isPublished">
-        <option [value]="true"> Active </option>
-        <option [value]="false">Passive</option>
-    </select>
-    <label for="user">User</label>
-    <select [(ngModel)]="post.userId" name="user">
-        <option *ngFor="let user of users" [value]="user.userId">{{user.username}}</option>
-    </select>
-    <div>
-        <button (click)="handleSaveClick()" type="button">Save</button>
+
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="end center">
+            <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+                <button *ngIf="!editMode" mat-stroked-button color="warn" (click)="handleEditClick()" aria-label="Close dialog">
+                    <span>Edit</span>
+                </button>
+                <button *ngIf="editMode" mat-stroked-button color="warn" (click)="handleSaveClick()" aria-label="Close dialog">
+                    <span>Save</span>
+                </button>
+                <button style="margin-left: 1%;" mat-stroked-button color="warn" (click)="handleDeleteClick()" aria-label="Close dialog">
+                    <span>Delete</span>
+                </button>
+                <button style="margin-left: 1%;" mat-stroked-button color="primary" [routerLink]="'/postlist'" type="button">
+                    <span>
+                        Return Post List
+                    </span>
+                </button>
+            </div>
+        </div>
     </div>
 </form>
 
-<button [routerLink]="'/postlist'">Return Post List</button>
+
+
+

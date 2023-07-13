@@ -1,23 +1,74 @@
-<form>
-    <label for="title">Title</label>
-    <input type="text" [(ngModel)]="post.title" name= "title" >
-    <label for="content">Content</label>
-    <textarea [(ngModel)]="post.content" name="content"></textarea>
-    <label for="viewCount">View Count</label>
-    <input type="number" [(ngModel)]="post.viewCount" name= "viewCount" >
-    <label for="creationDate">Creation Date</label>
-    <input type="date" [(ngModel)]="post.creationDate" name="creationDate">
-    <label for="isPublished">Publish State</label>
-    <select [(ngModel)]="post.isPublished" name="isPublished">
-        <option [value]="true"> Published </option>
-        <option [value]="false">Notpublished</option>
-    </select>
-    <label for="user">User</label>
-    <select [(ngModel)]="post.userId" name="user">
-        <option *ngFor="let user of users" [value]="user.userId">{{user.username}}</option>
-    </select>
-    <div>
-        <button (click)="handleSaveClick()" type="button">Save</button>
-        <button (click)="handleCancelClick()" type="button">Cancel</button>
-    </div>
-</form>
+<mat-card style="height: 600px;  padding: 5%;">
+    <form name="postForm" style="text-align: center;">
+        <div mat-dialog-content newgenPerfectScrollbar>
+            <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+                <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Title</mat-label>
+                        <input matInput [(ngModel)]="post.title" [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+                <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Content</mat-label>
+                        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" [(ngModel)]="post.content" [ngModelOptions]="{standalone: true}"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+                <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>View Count</mat-label>
+                        <input matInput type="number" [(ngModel)]="post.viewCount" [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+                <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Creation Date</mat-label>
+                        <input matInput type="date" [(ngModel)]="post.creationDate" [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+                <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Publish State</mat-label>
+                        <select matNativeControl [(ngModel)]="post.isPublished" [ngModelOptions]="{standalone: true}" name="isPublished">
+                            <option [value]="true"> Published </option>
+                            <option [value]="false">Notpublished</option>
+                        </select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+                <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>User</mat-label>
+                        <select matNativeControl [(ngModel)]="post.userId" name="user" [ngModelOptions]="{standalone: true}">
+                            <option *ngFor="let user of users" [value]="user.userId">{{user.username}}</option>
+                        </select>
+
+
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="end center">
+                <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+                    <button mat-stroked-button color="warn" (click)="handleSaveClick()" aria-label="Close dialog">
+                        <span>Save</span>
+                    </button>
+                    <button style="margin-left: 1%;" mat-stroked-button color="primary" (click)="handleCancelClick()" type="button">
+                        <span>
+                            Cancel
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</mat-card>

@@ -19,7 +19,7 @@
   body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
-    background-color: bisque;
+    background-color: #424242;
     background-repeat: no-repeat;
   }
   img, picture, video, canvas, svg {
@@ -37,3 +37,7 @@
   }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 1em 0 1em 0;
+  color: white !important;
+}
