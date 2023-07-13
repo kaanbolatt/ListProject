@@ -119,3 +119,10 @@ body {
   background-color: var(--bgColor);
   /* Çift satırlar için yeşil arkaplan */
 }
+
+th.mat-header-cell, td.mat-cell {
+  width: 200px; /* Sütun genişliği */
+  white-space: nowrap; /* Uzun metinlerin satır atlamadan görüntülenmesini sağlar */
+  overflow: hidden; /* İçeriğin sütun dışına taşmasını engeller */
+  text-overflow: ellipsis; /* Taşan içeriği ... ile gösterir */
+}
