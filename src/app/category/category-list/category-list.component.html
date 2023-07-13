@@ -1,37 +1,39 @@
-<table>
-    <thead>
-        <tr>
-            <th>Category ID</th>
-            <th>Category Name</th>
-            <th>Creation Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of pagedData">
-            <td>{{item.categoryId}}</td>
-            <td>{{item.name}}</td>
-            <td>{{item.creationDate}}</td>
-            <app-button [buttonText]="'Detail'" [id]= "item.categoryId" (onButtonClick)="handleDetailClick($event)"></app-button>
-            <app-button [buttonText]="'Delete'" [id]= "item.categoryId" (onButtonClick)="handleDeleteClick($event)" ></app-button>
-        </tr>
-    </tbody>
+<button mat-raised-button color="primary" style="float: right;" [routerLink]="'/categoryadd'">+ Add Category</button>
+
+<mat-form-field appearance="fill">
+    <mat-label>Search</mat-label>
+    <input matInput (input)="applyFilter($event.target)" placeholder="Search Text">
+</mat-form-field>
+
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
+    <ng-container matColumnDef="categoryId">
+        <th mat-header-cell *matHeaderCellDef> Category ID</th>
+        <td mat-cell *matCellDef="let element"> {{element.categoryId}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="categoryName">
+        <th mat-header-cell *matHeaderCellDef> Category Name</th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="creationDate">
+        <th mat-header-cell *matHeaderCellDef> Creation Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.creationDate | date}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="transactions">
+        <th mat-header-cell *matHeaderCellDef> Transactions </th>
+        <td mat-cell *matCellDef="let element">
+            <app-button [buttonText]="'Detail'" [id]="element.categoryId" (onButtonClick)="handleDetailClick($event)"></app-button>
+            <app-button style="margin-left: 5%;" [buttonText]="'Delete'" [id]="element.categoryId" (onButtonClick)="handleDeleteClick($event)"></app-button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
 </table>
 
-<button (click)="handleAddCategory()">Add Category</button>
-
-<form *ngIf="addCategoryForm">
-    <label for="name">Name</label>
-    <input type="text" [(ngModel)]="newCategoryName" name="name">
-    <label for="creationDate">Creation Date</label>
-    <input type="date" [(ngModel)]="newCategoryDate" name="creationDate">
-    <div>
-        <button type="button" (click)="handleSaveClick()">Save</button>
-        <button type="button" (click)="handleCancelClick()">Cancel</button>
-    </div>
-</form>
-
-<div class="pagination" *ngIf="totalPages > 0">
-    <button [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
-    <span>{{ currentPage }}</span>
-    <button [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
-</div>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+</mat-paginator>

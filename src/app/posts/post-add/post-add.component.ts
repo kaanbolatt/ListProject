@@ -4,7 +4,6 @@ import { PostService } from '../post.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/user/user.service';
 import { User } from 'src/app/user/user';
-import { ActionTypes } from 'src/app/enums/action-types.enum';
 @Component({
   selector: 'app-post-add',
   templateUrl: './post-add.component.html',
@@ -23,7 +22,6 @@ export class PostAddComponent implements OnInit {
     isPublished: false
   };
 
-  action: ActionTypes | undefined;
   dialogTitle: string = "Add Post";
   users: User[] = [];
   posts: Post[] = [];

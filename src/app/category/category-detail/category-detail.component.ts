@@ -27,10 +27,10 @@ export class CategoryDetailComponent {
     private categoryService: CategoryService,
     private postService: PostService,
     private activatedRoute: ActivatedRoute,
-    private router: Router){
+    private router: Router) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
       this.category = this.categoryService.getCategoryById(Number(id))!;
@@ -54,5 +54,10 @@ export class CategoryDetailComponent {
     this.editMode = false;
     this.updatedCategory.creationDate = "";
     this.updatedCategory.name = "";
+  }
+
+  handleDeleteClick() {
+    this.categoryService.deleteCategory(this.category.categoryId);
+    this.router.navigateByUrl('/categorylist');
   }
 }
