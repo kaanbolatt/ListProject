@@ -1,17 +1,57 @@
-<form class="addForm">
-    <label for="username">Username</label>
-    <input type="text" [(ngModel)]="user.username" name="username">
-    <label for="email">Email Adress</label>
-    <input type="text" [(ngModel)]="user.email" name="email">
-    <label for="creationDate">User Creation Date</label>
-    <input type="date" [(ngModel)]="user.creationDate" name="creationDate">
-    <label for="userState">User State</label>
-    <select [(ngModel)]="user.isActive" name="userState">
-        <option [value]="true">Active</option>
-        <option [value]="false">Passive</option>
-    </select>
-    <div class="buttons">
-        <button type="button" (click)="handleCreateClick()" class="save-btn">Create</button>
-        <button type="button" (click)="handleCancelClick()" class="cancel-btn">Cancel</button>
-    </div>
-</form>
+<mat-card style="height: 600px;  padding: 5%;">
+    <form name="postForm" style="text-align: center;">
+        <div mat-dialog-content newgenPerfectScrollbar>
+            <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+                <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>User Name</mat-label>
+                        <input matInput [(ngModel)]="user.username" [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+                <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Email Adress</mat-label>
+                        <input matInput [(ngModel)]="user.email" [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+                <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>User Creation Date</mat-label>
+                        <input matInput type="date" [(ngModel)]="user.creationDate" [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
+                <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Is Active</mat-label>
+                        <select matNativeControl [(ngModel)]="user.isActive" [ngModelOptions]="{standalone: true}" name="isActive">
+                            <option [value]="true"> Active </option>
+                            <option [value]="false">Passive</option>
+                        </select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="end center">
+                <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+                    <button mat-stroked-button color="warn" (click)="handleCreateClick()" aria-label="Close dialog">
+                        <span>Save</span>
+                    </button>
+                    <button style="margin-left: 1%;" mat-stroked-button color="primary" (click)="handleCancelClick()" type="button">
+                        <span>
+                            Cancel
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</mat-card>

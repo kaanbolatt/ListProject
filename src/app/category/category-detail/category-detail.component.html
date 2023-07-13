@@ -1,5 +1,9 @@
-
-<form  name="categoryForm" style="text-align: center; padding: 5%;">
+<form name="categoryForm" style="text-align: center; padding: 5%;">
+    <div class="footer" style="color: white;">
+        <div>
+            <p>{{category.name}} contains {{postCount}} posts.</p>
+        </div>
+    </div>
     <div mat-dialog-content newgenPerfectScrollbar>
         <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
             <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
@@ -17,13 +21,6 @@
                 </mat-form-field>
             </div>
         </div>
-        <!-- <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
-            <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
-                <mat-form-field appearance="outline" fxFlex="100">
-                    <mat-label>{{category.name}} contains {{postCount}} posts.</mat-label>
-                </mat-form-field>
-            </div>
-        </div> -->
 
         <div fxLayout="row" fxLayoutAlign="end center">
             <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
@@ -45,16 +42,3 @@
         </div>
     </div>
 </form>
-
-<!-- 
-
-<form *ngIf="editMode">
-    <label for="name">Name</label>
-    <input type="text" [(ngModel)]="updatedCategory.name" name="name">
-    <label for="creationDate">Creation Date</label>
-    <input type="date" [(ngModel)]="updatedCategory.creationDate" name="creationDate">
-    <div>
-        <button type="button" (click)="handleSaveClick()">Save</button>
-        <button type="button" (click)="handleCancelClick()">Cancel</button>
-    </div>
-</form> -->

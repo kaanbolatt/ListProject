@@ -50,27 +50,6 @@ export class CategoryListComponent implements AfterViewInit {
     this.router.navigate(["/categorylist/", $event]);
   }
 
-  // handleAddCategory() {
-  //   this.addCategoryForm = !this.addCategoryForm;
-  // }
-
-  // handleSaveClick() {
-  //   if (this.newCategoryName === "" || this.newCategoryDate === "")
-  //     alert("Name or creation date cannot be empty.")
-  //   else {
-  //     this.categoryService.addCategory(this.newCategoryName, this.newCategoryDate);
-     
-  //     this.addCategoryForm = false;
-  //     this.newCategoryName = "";
-  //     this.newCategoryDate = "";
-  //   }
-  // }
-
-  // handleCancelClick() {
-  //   this.addCategoryForm = false;
-  //   this.newCategoryName = "";
-  //   this.newCategoryDate = "";
-  // }
 
   applyFilter(filterValue: any): void {
     this.dataSource.filter = filterValue.value.trim().toLowerCase();

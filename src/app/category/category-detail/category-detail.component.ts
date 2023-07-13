@@ -34,6 +34,10 @@ export class CategoryDetailComponent {
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
       this.category = this.categoryService.getCategoryById(Number(id))!;
+      if (this.category == undefined) {
+        alert("An error occurred while retrieving category information.");
+        this.router.navigateByUrl("/categorylist");
+      }
       this.updatedCategory.categoryId = Number(id);
       if (this.postService.getPosts().length === 0)
         this.postService.setPosts();

@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { UserService } from '../user.service';
 import { User } from '../user';
 import { PostService } from 'src/app/posts/post.service';
 import { CommentService } from 'src/app/comments/comment.service';
-
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,37 +13,57 @@ import { CommentService } from 'src/app/comments/comment.service';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
-export class UserListComponent {
+export class UserListComponent implements AfterViewInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  dataSource = new MatTableDataSource<User>();
+
   users: User[] = [];
 
   //forms kısmında yer alan değişkenleri tanımladık.
-  username: string= "";
-  email: string= "";
-  creationDate: string="";
-  isActive: boolean=false;
-  editMode: boolean=false;
-  userId: number=0;
+  username: string = "";
+  email: string = "";
+  creationDate: string = "";
+  isActive: boolean = false;
+  editMode: boolean = false;
+  userId: number = 0;
+  totalItems: any;
+  displayedColumns: string[] = ['userId', 'username', 'email', 'creationDate', 'isActive', 'transactions'];
 
 
-  constructor(private userService: UserService, private postService: PostService, private commentService: CommentService) {
-    if (this.userService.getUsers().length === 0)
-      this.userService.setUsers();
-    this.users = this.userService.getUsers();
+  constructor(private userService: UserService, private postService: PostService, private commentService: CommentService, private router: Router) {
+    this.getAllUsers();
     if (this.postService.getPosts().length === 0)
       this.postService.setPosts();
     if (this.commentService.getComments().length === 0)
       this.commentService.setComments();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  getAllUsers() {
+    if (this.userService.getUsers().length === 0)
+      this.userService.setUsers();
+    this.users = this.userService.getUsers();
+    if (this.users != undefined) {
+      this.totalItems = this.users.length;
+      this.dataSource = new MatTableDataSource(this.users);
+    }
+  }
+
   //son kullanıcı kalması durumunda hata vermesini sağladık.
   handleDeleteClick($event: number) {
-    if(this.userService.userCount() === 1)
+    if (this.userService.userCount() === 1)
       alert("You can not delete last users.")
     else if (this.checkPostsAndComments($event) === true)
       alert("You cannot delete a user with post or comment");
     else {
       this.userService.deleteUser($event);
       this.users = this.userService.getUsers();
+      this.totalItems = this.users.length;
+      this.dataSource = new MatTableDataSource(this.users);
+      this.dataSource.paginator = this.paginator;
     }
   }
 
@@ -54,37 +76,25 @@ export class UserListComponent {
       return false;
   }
 
-
-  handleSaveClick() {
-    if(this.username == '' || this.email == '' || this.creationDate == '')
-      alert("All the empty spaces must be filled.");
-    else if(this.userService.checkUnique(this.username,this.email,this.userId) === false)
-      alert("Username and email must be unique from others.");
-    else {
-      const user: User = {
-        userId: this.userId,
-        username: this.username ,
-        email: this.email ,
-        creationDate: this.creationDate ,
-        isActive: this.isActive
-      }
-      this.userService.editUser(user, this.userId);
-      this.users = this.userService.getUsers();
-      this.handleCancelClick();
-    }
+  handleDetailClick($event: number): void {
+    this.router.navigate(["/userlist/", $event]);
   }
 
-  handleEditClick($event: number): void {
-    this.editMode = true;
-    this.userId = $event;
-  }
+  // handleEditClick($event: number): void {
+  //   this.editMode = true;
+  //   this.userId = $event;
+  // }
 
-  handleCancelClick(): void {
-    this.editMode= false;
-    this.username = "";
-    this.email = "";
-    this.creationDate = "";
-    this.userId = 0;
+  // handleCancelClick(): void {
+  //   this.editMode = false;
+  //   this.username = "";
+  //   this.email = "";
+  //   this.creationDate = "";
+  //   this.userId = 0;
+  // }
+
+  applyFilter(filterValue: any): void {
+    this.dataSource.filter = filterValue.value.trim().toLowerCase();
   }
 }
 

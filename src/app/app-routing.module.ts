@@ -11,10 +11,12 @@ import { CommentListComponent } from './comments/comment-list/comment-list.compo
 import { CommentAddComponent } from './comments/comment-add/comment-add.component';
 import { CommentDetailComponent } from './comments/comment-detail/comment-detail.component';
 import { CategoryAddComponent } from './category/category-add/category-add.component';
+import { UserDetailComponent } from './user/user-detail/user-detail.component';
 
 const routes: Routes = [
   {path: "userlist", component: UserListComponent},
   {path: "useradd", component: UserAddComponent},
+  {path: "userlist/:id", component: UserDetailComponent},
   {path: "postlist", component: PostListComponent},
   {path: "postadd", component: PostAddComponent},
   {path: "postlist/:id", component: PostDetailComponent},

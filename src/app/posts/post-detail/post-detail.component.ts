@@ -50,11 +50,15 @@ export class PostDetailComponent {
     }
     this.posts = this.postService.getPosts()
   }
-  
+
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
       this.post = this.posts.find(post => post.postId === Number(id))!;
+      if (this.post == undefined) {
+        alert("An error occurred while retrieving post information.");
+        this.router.navigateByUrl("/postlist");
+      }
     })
   }
 
