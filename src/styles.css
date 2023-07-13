@@ -112,3 +112,10 @@ body {
   background-color: var(--bgColor) !important;
   float: right !important;
 }
+
+
+
+.row-color:nth-child(even) {
+  background-color: var(--bgColor);
+  /* Çift satırlar için yeşil arkaplan */
+}
