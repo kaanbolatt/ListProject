@@ -12,13 +12,15 @@ import { CommentsModule } from './comments/comments.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FormatNumberPipe } from './shared/pipes/format-number.pipe';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ButtonComponent,
-    NavbarComponent
+    NavbarComponent,
+    FormatNumberPipe
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports: [ButtonComponent]
+  exports: [ButtonComponent, FormatNumberPipe]
 })
 export class AppModule { }
 
