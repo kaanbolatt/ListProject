@@ -1,8 +1,16 @@
-<button mat-raised-button color="primary" class="custom-button" [routerLink]="'/commentadd'">+ Add Comment</button>
+<button mat-raised-button color="primary" class="custom-button ml-2" [routerLink]="'/commentadd'">+ Add Comment</button>
+<button mat-raised-button color="primary" class="custom-button" (click)="clearFilter()">Clear Filter</button>
 
 <mat-form-field appearance="fill">
     <mat-label>General Search</mat-label>
     <input matInput (input)="applyFilter($event.target)" placeholder="Search Text">
+</mat-form-field>
+
+<mat-form-field appearance="fill" class="ml-2">
+    <mat-label>Post Search</mat-label>
+    <select matNativeControl [(ngModel)]="selectedPostId" (change)="applyFilterPost()" name="user" [ngModelOptions]="{standalone: true}">
+        <option *ngFor="let post of posts" [value]="post.postId">{{post.title}}</option>
+    </select>
 </mat-form-field>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100">
