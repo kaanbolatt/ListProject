@@ -14,7 +14,7 @@
 </mat-form-field>
 
 <mat-form-field appearance="fill" class="ml-2">
-    <mat-label>Categorie Search</mat-label>
+    <mat-label>Category Search</mat-label>
     <select matNativeControl [(ngModel)]="selectedCategoryId" (change)="applyFilterCategorie()" name="user" [ngModelOptions]="{standalone: true}">
         <option *ngFor="let category of categories" [value]="category.categoryId">{{category.name}}</option>
     </select>
