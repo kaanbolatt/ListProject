@@ -1,5 +1,5 @@
-<mat-card style="height: 600px;  padding: 5%;">
-    <form name="postForm" style="text-align: center;">
+<mat-card class="custom-mat-card">
+    <form name="postForm" class="center-text">
         <div mat-dialog-content newgenPerfectScrollbar>
             <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
                 <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
@@ -70,7 +70,7 @@
                     <button mat-stroked-button color="warn" (click)="handleSaveClick()" aria-label="Close dialog">
                         <span>Save</span>
                     </button>
-                    <button style="margin-left: 1%;" mat-stroked-button color="primary" (click)="handleCancelClick()" type="button">
+                    <button class="ml-1" mat-stroked-button color="primary" (click)="handleCancelClick()" type="button">
                         <span>
                             Cancel
                         </span>

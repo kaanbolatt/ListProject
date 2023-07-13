@@ -1,5 +1,5 @@
 
-<form  name="userForm" style="text-align: center; padding: 5%;">
+<form  name="userForm" class="custom-form">
     <div mat-dialog-content newgenPerfectScrollbar>
         <div fxLayout="row" fxLayoutGap="5px" class="mt-20">
             <div fxFlex="50" fxLayout.xs="column" fxLayoutGap="4px">
@@ -45,10 +45,10 @@
                 <button *ngIf="editMode" mat-stroked-button color="warn" (click)="handleSaveClick()" aria-label="Close dialog">
                     <span>Save</span>
                 </button>
-                <button style="margin-left: 1%;" mat-stroked-button color="warn" (click)="handleDeleteClick()" aria-label="Close dialog">
+                <button class="ml-1" mat-stroked-button color="warn" (click)="handleDeleteClick()" aria-label="Close dialog">
                     <span>Delete</span>
                 </button>
-                <button style="margin-left: 1%;" mat-stroked-button color="primary" [routerLink]="'/userlist'" type="button">
+                <button class="ml-1" mat-stroked-button color="primary" [routerLink]="'/userlist'" type="button">
                     <span>
                         Return User List
                     </span>
